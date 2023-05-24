@@ -8,7 +8,14 @@ $age = $_POST['age'];
 $teacher_id = $_POST['teacher_id'];
 $student_id = $_POST['student_id'];
 
-if ((!isset($teacher_id) || empty($teacher_id)) || (!isset($student_id) || empty($student_id)) || (!isset($student_id) || empty($student_id)) || (!isset($name) || empty($name)) && (!isset($surname) || empty($surname)) && (!isset($age) || empty($age))) {
+$studentCheck = $pdo->prepare("SELECT * FROM `student` WHERE `id` = ?");
+$studentCheck->execute([$student_id]);
+
+if ($studentCheck -> rowCount() === 0) {
+    header("Refresh: 5; URL=../studentlist.php");
+    die('No such student');
+}
+if ((!isset($teacher_id) || empty($teacher_id)) || (!isset($student_id) || empty($student_id)) || (!isset($name) || empty($name)) && (!isset($surname) || empty($surname)) && (!isset($age) || empty($age))) {
     echo 'Please fill data !';
     header("Refresh: 5; URL=../edit.php?student_id=$student_id");
     die();
@@ -29,7 +36,6 @@ $statement->bindParam(':teacher_id', $teacher_id);
 $statement->bindParam(':student_id', $student_id);
 
 if ($statement->execute()) {
-    echo "Student's information has been edited";
     header("Location: ../studentlist.php");
 } else {
     $errorInfo = $statement->errorInfo();

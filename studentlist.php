@@ -2,7 +2,7 @@
 require_once('core.php');
 
 $statement = $pdo->prepare(
-    "SELECT student.id, student.name, student.surname, student.age, teacher.name AS teacher_name, teacher.surname AS teacher_surname
+    "SELECT student.id, student.name, student.surname, student.age,student.teacher_id, teacher.name AS teacher_name, teacher.surname AS teacher_surname
     FROM `student`
     LEFT JOIN `teacher`
     ON student.teacher_id = teacher.id;"
@@ -42,7 +42,14 @@ $students = $statement->fetchAll();
                 <td><?= $student['teacher_name'] ?></td>
                 <td><?= $student['teacher_surname'] ?></td>
                 <td>
-                    <a href="edit.php?student_id=<?= $student['id'] ?>" class="btn btn-primary">Edit</a>
+                    <form action="edit.php" method="GET">
+                        <input type="hidden" name="name" value="<?= $student['name'] ?>">
+                        <input type="hidden" name="surname" value="<?= $student['surname'] ?>">
+                        <input type="hidden" name="age" value="<?= $student['age'] ?>">
+                        <input type="hidden" name="teacher_id" value="<?= $student['teacher_id'] ?>">
+                        <input type="hidden" name="student_id" value="<?= $student['id'] ?>">
+                        <input type="submit" class="btn btn-primary" value="Edit">
+                    </form>
                 </td>
                 <td>
                     <a class="btn btn-danger" href="handlers/delete.php?student_id=<?= $student['id'] ?>">Delete</a>

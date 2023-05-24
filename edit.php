@@ -1,3 +1,14 @@
+<?php
+$name = $_GET['name'];
+$surname = $_GET['surname'];
+$age = $_GET['age'];
+$teacher_id = $_GET['teacher_id'];
+$student_id = $_GET['student_id'];
+
+if ((!isset($teacher_id) || empty($teacher_id)) && (!isset($student_id) || empty($student_id)) && (!isset($name) || empty($name)) && (!isset($surname) || empty($surname)) && (!isset($age) || empty($age))) {
+    die('Oops, something went wrong !');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,15 +21,15 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-6">
+            <div class="col-7">
                 <form class="pt-3" action="handlers/edit.php" method="POST">
-                    <input class="form-control mb-3" name="name" type="text" placeholder="Name">
-                    <input class="form-control mb-3" name="surname" type="text" placeholder="Surname">
-                    <input class="form-control mb-3" name="age" type="number" placeholder="Age">
+                    <input class="form-control mb-3" value="<?= $name ?>" name="name" type="text" placeholder="Name">
+                    <input class="form-control mb-3" value="<?= $surname ?>" name="surname" type="text" placeholder="Surname">
+                    <input class="form-control mb-3" value="<?= $age ?>" name="age" type="number" placeholder="Age">
                     <select class="form-control mb-3" name="teacher_id">
-                        <option value="1">Nicat</option>
-                        <option value="2">Mehemmed</option>
-                        <option value="3">Larry</option>
+                        <option value="1" <?= $teacher_id === '1' ? 'selected' : '' ?>>Nicat</option>
+                        <option value="2" <?= $teacher_id === '2' ? 'selected' : '' ?>>Mehemmed</option>
+                        <option value="3" <?= $teacher_id === '3' ? 'selected' : '' ?>>Larry</option>
                     </select>
                     <input type="submit" class="btn btn-primary" value="Edit">
                     <input type="hidden" name="student_id" value="<?= $_GET['student_id'] ?>">

@@ -25,4 +25,3 @@ if ($statement->execute([$name, $surname, $teacher_id, $age])) {
 }
 
 ?>
-
